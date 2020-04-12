@@ -1,0 +1,28 @@
+用来介绍用来来接数据库的jdbc技术相关的知识:
+
+1. 要想通过jdbc技术来连接数据库,首先我们要做的就是在pom.xml文件中添加相关的依赖.
+    要添加的依赖是:mysql-connector-java
+        <!--使用jdbc技术来连接数据库的依赖-->
+        <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>6.0.6</version>
+        </dependency>
+2. 基本步骤有哪些?
+    - 注册驱动
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        这里需要注意的是,当连接数据库的依赖的版本6.0及以后的版本中,驱动的全类名中带有cj包名.
+    - 获取连接对象
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/newdb3?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai",
+                    "root",
+                    "root");
+            在获取连接对象的时候,是通过驱动对象DriverManager来调用getConnection方法来获取连接的.
+            getConnection(url, username, password);方法中的三个参数需要赋值
+                url: jdbc:mysql://localhost:3306/newdb3?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai"
+                    其中:serverTimezone=Asia/Shanghai是用来设置时区的,这一项在使用的数据库是MariaDB数据库服务的时候不能缺省
+                    其次:jdbc:mysql://localhost:3306/newdb3这个是连接数据库的路径,格式是标准的,不同的数据库更换名称即可.
+                    最后:useUnicode=true&characterEncoding=utf-8这个是用来设定编码的字符集的.
+    - 创建SQL执行对象
+    - 执行SQL语句
+    - 最后需要释放资源
